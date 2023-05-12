@@ -81,6 +81,22 @@ services:
     networks:
       - stark_network
 
+  stark_events:
+    build: ./images/php8
+    container_name: stark_events
+    expose:
+      - 9000
+    links:
+      - stark_mysql
+    command: php artisan queue:work --queue=events
+    volumes:
+      - ./data/back:/data/back
+      - ./resources:/resources
+    restart: always
+    working_dir: /data/back
+    networks:
+      - stark_network
+
   ##################################################
   ######                FRONT                #######
   ##################################################

@@ -26,6 +26,7 @@ services:
       - ./resources/nginx/dc_init_command.sh:/usr/bin/dc_init_command
       - ./resources/nginx/sites-available:/etc/nginx/sites-available/sites-available
     depends_on:
+      - stark_redis
       - stark_mysql
       - stark_back
       - stark_front
@@ -35,6 +36,20 @@ services:
         aliases:
           - stark.local
           - api.stark.local
+
+  ##################################################
+  ######                REDIS                #######
+  ##################################################
+
+  stark_redis:
+    image: redis:alpine
+    container_name: stark_redis
+    ports:
+      - "16379:6379"
+    command: >
+      --requirepass Qazxsw123
+    networks:
+      - stark_network
 
   ##################################################
   ######                MYSQL                #######
@@ -70,6 +85,7 @@ services:
       - 9000
     links:
       - stark_mysql
+      - stark_redis
     command: dc_init_command
     volumes:
       - ./data/back:/data/back
@@ -83,16 +99,54 @@ services:
 
   stark_events:
     build: ./images/php8
-    container_name: stark_events
     expose:
       - 9000
     links:
       - stark_mysql
+      - stark_redis
     command: php artisan queue:work --queue=events
     volumes:
       - ./data/back:/data/back
       - ./resources:/resources
     restart: always
+    working_dir: /data/back
+    networks:
+      - stark_network
+
+  stark_rawg:
+    build: ./images/php8
+    expose:
+      - 9000
+    links:
+      - stark_mysql
+      - stark_redis
+    command: php artisan queue:work --queue=rawg
+    volumes:
+      - ./data/back:/data/back
+      - ./resources:/resources
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 10
+    working_dir: /data/back
+    networks:
+      - stark_network
+
+  stark_steam:
+    build: ./images/php8
+    expose:
+      - 9000
+    links:
+      - stark_mysql
+      - stark_redis
+    command: php artisan queue:work --queue=steam
+    volumes:
+      - ./data/back:/data/back
+      - ./resources:/resources
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 5
     working_dir: /data/back
     networks:
       - stark_network

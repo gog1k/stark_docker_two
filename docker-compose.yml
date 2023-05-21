@@ -125,9 +125,9 @@ services:
       - ./data/back:/data/back
       - ./resources:/resources
     restart: always
-    deploy:
-      mode: replicated
-      replicas: 10
+#    deploy:
+#      mode: replicated
+#      replicas: 10
     working_dir: /data/back
     networks:
       - stark_network
@@ -144,9 +144,9 @@ services:
       - ./data/back:/data/back
       - ./resources:/resources
     restart: always
-    deploy:
-      mode: replicated
-      replicas: 5
+#    deploy:
+#      mode: replicated
+#      replicas: 5
     working_dir: /data/back
     networks:
       - stark_network

@@ -6,11 +6,11 @@ map $http_upgrade $connection_upgrade {
 server {
 	listen 80;
 	listen 8001;
-	server_name api.stark.local;
+	server_name api.games.local;
 	index index.php index.html;
-	error_log  /var/log/nginx/back.error.log;
-	access_log /var/log/nginx/back.access.log;
-	root /data/back/public;
+	error_log  /var/log/nginx/games_back.error.log;
+	access_log /var/log/nginx/games_back.access.log;
+	root /data/games_back/public;
 
 	location / {
 		try_files $uri $uri/ /index.php?$args; # make index.php handle requests for /
@@ -18,7 +18,7 @@ server {
 
     location ~ ^/.+\.php(/|$) {
 		include fastcgi_params;
-		fastcgi_pass stark_back:9000;
+		fastcgi_pass stark_games_back:9000;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }

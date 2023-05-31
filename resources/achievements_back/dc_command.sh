@@ -1,16 +1,16 @@
 #!/bin/bash
 
-ln -sf /resources/back/.env /data/back/.env
+ln -sf /resources/achievements_back/.env /data/achievements_back/.env
 
 bash /resources/wait-for-mysql.sh
 
 if [[ $1 = 'build' ]]; then
 
-  cd /data/back
+  cd /data/achievements_back
   sudo -u docker composer install
   sudo -u docker composer update
 
 fi
 
-php /data/back/artisan migrate
+php /data/achievements_back/artisan migrate
 php-fpm

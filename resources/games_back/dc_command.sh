@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ln -sf /resources/games_back/.env /data/games_back/.env
 
 bash /resources/wait-for-mysql.sh

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ln -sf /resources/achievements_front/.env /data/achievements_front/.env
 
 #if [[ $1 = 'build' ]]; then

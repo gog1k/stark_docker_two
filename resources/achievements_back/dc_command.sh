@@ -8,7 +8,7 @@ bash /resources/wait-for-mysql.sh
   sudo -u docker composer install
   sudo -u docker composer update
 
-#fi
+fi
 
 php /data/achievements_back/artisan migrate
 php-fpm

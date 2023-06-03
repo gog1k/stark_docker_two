@@ -16,14 +16,13 @@ services:
     ports:
       - 80:80
       - 8000:80
-    command: dc_init_command
+    command: dc_command
     expose:
       - 8001
     volumes:
       - ./data:/data
       - ./logs/nginx:/var/log/nginx
       - ./resources/nginx/dc_command.sh:/usr/bin/dc_command
-      - ./resources/nginx/dc_init_command.sh:/usr/bin/dc_init_command
       - ./resources/nginx/sites-available:/etc/nginx/sites-available/sites-available
     depends_on:
       - stark_redis
@@ -96,7 +95,6 @@ services:
       - ./data/games_back:/data/games_back
       - ./resources:/resources
       - ./resources/games_back/dc_command.sh:/usr/bin/dc_command
-      - ./resources/games_back/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/games_back
     networks:
@@ -116,7 +114,6 @@ services:
       - ./data/games_front:/data/games_front
       - ./resources:/resources
       - ./resources/games_front/dc_command.sh:/usr/bin/dc_command
-      - ./resources/games_front/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/games_front
     networks:
@@ -139,7 +136,6 @@ services:
       - ./data/achievements_back:/data/achievements_back
       - ./resources:/resources
       - ./resources/achievements_back/dc_command.sh:/usr/bin/dc_command
-      - ./resources/achievements_back/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/achievements_back
     networks:
@@ -159,7 +155,6 @@ services:
       - ./data/achievements_front:/data/achievements_front
       - ./resources:/resources
       - ./resources/achievements_front/dc_command.sh:/usr/bin/dc_command
-      - ./resources/achievements_front/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/achievements_front
     networks:

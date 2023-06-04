@@ -23,7 +23,7 @@ services:
       - ./data:/data
       - ./logs/nginx:/var/log/nginx
       - ./resources/nginx/dc_command.sh:/usr/bin/dc_command
-      - ./resources/nginx/sites-available:/etc/nginx/sites-available/sites-available
+      - ./resources/nginx/sites-available:/etc/nginx/sites-available
     depends_on:
       - stark_redis
       - stark_mysql

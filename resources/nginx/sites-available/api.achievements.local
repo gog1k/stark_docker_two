@@ -12,7 +12,7 @@ server {
 	access_log /var/log/nginx/achievements_back.access.log;
 	root /data/achievements_back/public;
 
-    location /storage/* {
+    location ~ ^/storage {
         add_header 'Access-Control-Allow-Origin' '*';
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
         add_header 'Access-Control-Allow-Headers' 'Origin, X-Requested-With, Content-Type, Accept';

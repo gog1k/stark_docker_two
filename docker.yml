@@ -153,7 +153,7 @@ services:
       - ./data/achievements_back:/data/achievements_back
       - ./resources:/resources
     restart: always
-    working_dir: /data/back
+    working_dir: /data/achievements_back
     networks:
       - stark_network
 

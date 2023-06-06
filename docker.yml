@@ -120,7 +120,7 @@ services:
       - stark_network
 
   ##################################################
-  ######                BACK                 #######
+  ######          ACHIEVEMENTS BACK          #######
   ##################################################
 
   stark_achievements_back:
@@ -138,6 +138,22 @@ services:
       - ./resources/achievements_back/dc_command.sh:/usr/bin/dc_command
     restart: always
     working_dir: /data/achievements_back
+    networks:
+      - stark_network
+
+  stark_achievements_events:
+    build: ./images/php8
+    expose:
+      - 9000
+    links:
+      - stark_mysql
+      - stark_redis
+    command: php artisan queue:work --queue=events
+    volumes:
+      - ./data/achievements_back:/data/achievements_back
+      - ./resources:/resources
+    restart: always
+    working_dir: /data/back
     networks:
       - stark_network
 

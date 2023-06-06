@@ -10,5 +10,5 @@ ln -sf /resources/achievements_front/.env /data/achievements_front/.env
 #sudo -u docker npm install
 
 cd /data/achievements_front
-sudo -u docker npm run serve
+npm run serve
 php-fpm

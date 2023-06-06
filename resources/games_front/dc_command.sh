@@ -10,5 +10,5 @@ ln -sf /resources/games_front/.env /data/games_front/.env
 #sudo -u docker npm install
 
 cd /data/games_front
-sudo -u docker npm run serve
+npm run serve
 php-fpm

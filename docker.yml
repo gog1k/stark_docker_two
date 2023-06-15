@@ -36,9 +36,7 @@ services:
       stark_network:
         aliases:
           - games.local
-          - api.games.local
           - achievements.local
-          - api.achievements.local
 
   ##################################################
   ######                REDIS                #######
@@ -96,7 +94,10 @@ services:
     environment:
       WEB_ALIAS_DOMAIN: api.games.local
     networks:
-      - stark_network
+      stark_network:
+        aliases:
+          - api.games.local
+          - api.games.local:8002
 
   ##################################################
   ######             GAMES FRONT             #######
@@ -135,7 +136,10 @@ services:
     environment:
       WEB_ALIAS_DOMAIN: api.achievements.local
     networks:
-      - stark_network
+      stark_network:
+        aliases:
+          - api.achievements.local
+          - api.achievements.local:8002
 
   stark_achievements_events:
     build:

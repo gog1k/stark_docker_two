@@ -5,11 +5,9 @@ RUN apt-get update && apt-get install -y \
         git \
         nodejs \
         npm \
-        netcat \
         sudo \
         iproute2 \
-        telnet \
-    && apt-get install -y libssh2-1-dev libxml2-dev libgmp-dev
+        telnet
 
 RUN apt-get -y install gcc make autoconf libc-dev pkg-config \
     && apt-get -y install libssh2-1-dev \

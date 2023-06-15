@@ -82,23 +82,23 @@ services:
   ######              GAMES BACK             #######
   ##################################################
 
-  stark_games_back:
-    build: ./images/php8
-    container_name: stark_games_back
-    expose:
-      - 9000
-    links:
-      - stark_mysql
-      - stark_redis
-    command: dc_command
-    volumes:
-      - ./data/games_back:/data/games_back
-      - ./resources:/resources
-      - ./resources/games_back/dc_command.sh:/usr/bin/dc_command
-    restart: always
-    working_dir: /data/games_back
-    networks:
-      - stark_network
+#  stark_games_back:
+#    build: ./images/php8
+#    container_name: stark_games_back
+#    expose:
+#      - 9000
+#    links:
+#      - stark_mysql
+#      - stark_redis
+#    command: dc_command
+#    volumes:
+#      - ./data/games_back:/data/games_back
+#      - ./resources:/resources
+#      - ./resources/games_back/dc_command.sh:/usr/bin/dc_command
+#    restart: always
+#    working_dir: /data/games_back
+#    networks:
+#      - stark_network
 
   ##################################################
   ######             GAMES FRONT             #######
@@ -123,23 +123,23 @@ services:
   ######          ACHIEVEMENTS BACK          #######
   ##################################################
 
-  stark_achievements_back:
-    build: ./images/php8
-    container_name: stark_achievements_back
-    expose:
-      - 9000
-    links:
-      - stark_mysql
-      - stark_redis
-    command: dc_command
-    volumes:
-      - ./data/achievements_back:/data/achievements_back
-      - ./resources:/resources
-      - ./resources/achievements_back/dc_command.sh:/usr/bin/dc_command
-    restart: always
-    working_dir: /data/achievements_back
-    networks:
-      - stark_network
+#  stark_achievements_back:
+#    build: ./images/php8
+#    container_name: stark_achievements_back
+#    expose:
+#      - 9000
+#    links:
+#      - stark_mysql
+#      - stark_redis
+#    command: dc_command
+#    volumes:
+#      - ./data/achievements_back:/data/achievements_back
+#      - ./resources:/resources
+#      - ./resources/achievements_back/dc_command.sh:/usr/bin/dc_command
+#    restart: always
+#    working_dir: /data/achievements_back
+#    networks:
+#      - stark_network
 
   stark_achievements_events:
     build: ./images/php8
@@ -175,3 +175,36 @@ services:
     working_dir: /data/achievements_front
     networks:
       - stark_network
+
+  stark_achievements_back:
+    build:
+      context: ./data/achievements_back
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: stark_achievements_back
+    ports:
+      - '8001:80'
+    depends_on:
+      - stark_mysql
+      - stark_redis
+    environment:
+      WEB_ALIAS_DOMAIN: api.achievements.local
+    networks:
+      - stark_network
+
+  stark_games_back:
+    build:
+      context: ./data/games_back
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: stark_games_back
+    ports:
+      - '8002:80'
+    depends_on:
+      - stark_mysql
+      - stark_redis
+    environment:
+      WEB_ALIAS_DOMAIN: api.games.local
+    networks:
+      - stark_network
+

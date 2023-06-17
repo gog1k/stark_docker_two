@@ -142,15 +142,18 @@ services:
           - api.achievements.local:8002
 
   stark_achievements_events:
-    build:
-      context: ./data/achievements_back
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: stark_achievements_events
-    command: php artisan queue:work --queue=events
-    depends_on:
+    build: ./images/php8
+    expose:
+      - 9000
+    links:
       - stark_mysql
       - stark_redis
+    command: php artisan queue:work --queue=events
+    volumes:
+      - ./data/achievements_back:/data/achievements_back
+      - ./resources:/resources
+    restart: always
+    working_dir: /data/achievements_back
     networks:
       - stark_network
 

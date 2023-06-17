@@ -16,15 +16,14 @@ services:
     ports:
       - 80:80
       - 8000:80
-    command: dc_init_command
+    command: dc_command
     expose:
       - 8001
     volumes:
       - ./data:/data
       - ./logs/nginx:/var/log/nginx
       - ./resources/nginx/dc_command.sh:/usr/bin/dc_command
-      - ./resources/nginx/dc_init_command.sh:/usr/bin/dc_init_command
-      - ./resources/nginx/sites-available:/etc/nginx/sites-available/sites-available
+      - ./resources/nginx/sites-available:/etc/nginx/sites-available
     depends_on:
       - stark_redis
       - stark_mysql
@@ -36,10 +35,10 @@ services:
     networks:
       stark_network:
         aliases:
-          - achievements.local
-          - api.achievements.local
           - games.local
+          - achievements.local
           - api.games.local
+          - api.achievements.local
 
   ##################################################
   ######                REDIS                #######
@@ -80,7 +79,7 @@ services:
       - stark_network
 
   ##################################################
-  ######                BACK                 #######
+  ######              GAMES BACK             #######
   ##################################################
 
   stark_games_back:
@@ -91,12 +90,11 @@ services:
     links:
       - stark_mysql
       - stark_redis
-    command: dc_init_command
+    command: dc_command
     volumes:
       - ./data/games_back:/data/games_back
       - ./resources:/resources
       - ./resources/games_back/dc_command.sh:/usr/bin/dc_command
-      - ./resources/games_back/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/games_back
     networks:
@@ -111,19 +109,18 @@ services:
     container_name: stark_games_front
     expose:
       - 3000
-    command: dc_init_command
+    command: dc_command
     volumes:
       - ./data/games_front:/data/games_front
       - ./resources:/resources
       - ./resources/games_front/dc_command.sh:/usr/bin/dc_command
-      - ./resources/games_front/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/games_front
     networks:
       - stark_network
 
   ##################################################
-  ######                BACK                 #######
+  ######          ACHIEVEMENTS BACK          #######
   ##################################################
 
   stark_achievements_back:
@@ -134,14 +131,13 @@ services:
     links:
       - stark_mysql
       - stark_redis
-    command: dc_init_command
+    command: dc_command
     volumes:
       - ./data/achievements_back:/data/achievements_back
       - ./resources:/resources
       - ./resources/achievements_back/dc_command.sh:/usr/bin/dc_command
-      - ./resources/achievements_back/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
-    working_dir: /data/back
+    working_dir: /data/achievements_back
     networks:
       - stark_network
 
@@ -157,7 +153,7 @@ services:
       - ./data/achievements_back:/data/achievements_back
       - ./resources:/resources
     restart: always
-    working_dir: /data/back
+    working_dir: /data/achievements_back
     networks:
       - stark_network
 
@@ -170,12 +166,11 @@ services:
     container_name: stark_achievements_front
     expose:
       - 3000
-    command: dc_init_command
+    command: dc_command
     volumes:
       - ./data/achievements_front:/data/achievements_front
       - ./resources:/resources
       - ./resources/achievements_front/dc_command.sh:/usr/bin/dc_command
-      - ./resources/achievements_front/dc_init_command.sh:/usr/bin/dc_init_command
     restart: always
     working_dir: /data/achievements_front
     networks:

@@ -1,4 +1,4 @@
-ln -sf /resources/achievements_back/.env /data/achievements_back/.env
+#ln -sf /resources/achievements_back/.env /data/achievements_back/.env
 
 bash /resources/wait-for-mysql.sh
 

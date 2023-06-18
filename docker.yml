@@ -139,7 +139,7 @@ services:
       stark_network:
         aliases:
           - api.achievements.local
-          - api.achievements.local:8002
+          - api.achievements.local:8001
 
   stark_achievements_events:
     build: ./images/php8
